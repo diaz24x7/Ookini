@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ookini | Café de Especialidad</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cormorant Garamond (Serif elegante) y Plus Jakarta Sans (Sans-serif moderno) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        coffee: {
+                            50: '#FAF8F5',
+                            100: '#F3EFE9',
+                            200: '#E6DCCF',
+                            300: '#D5C4B1',
+                            400: '#BCA38A',
+                            500: '#A18262',
+                            600: '#876646',
+                            700: '#6E5034',
+                            800: '#4D3622',
+                            900: '#2F2013',
+                            950: '#1B120A',
+                        },
+                        ochre: {
+                            100: '#FBF5EB',
+                            200: '#F4E3C9',
+                            500: '#D29C52',
+                            600: '#B67E35',
+                        },
+                        sage: {
+                            100: '#EBF0EC',
+                            500: '#7A9A82',
+                            800: '#2E4A36',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF8F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #BCA38A;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A18262;
+        }
+        /* Custom animations */
+        @keyframes steam {
+            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-10px) scale(1.1) rotate(5deg); opacity: 0.4; }
+            100% { transform: translateY(-25px) scale(1.2) rotate(-5deg); opacity: 0; }
+        }
+        .steam-effect {
+            animation: steam 4s ease-in-out infinite;
+        }
+        .steam-effect-delayed {
+            animation: steam 4.5s ease-in-out infinite;
+            animation-delay: 1.5s;
+        }
+    </style>
+</head>
+<body class="bg-coffee-50 text-coffee-900 font-sans selection:bg-coffee-200 selection:text-coffee-900 overflow-x-hidden">
+
+    <!-- NAVIGATION BAR -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-coffee-50/80 backdrop-blur-md border-b border-coffee-200/50 transition-all duration-300" id="main-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-3">
+                    <span class="font-serif text-3xl font-bold tracking-wider text-coffee-900">おおきに <span class="text-ochre-500 font-sans text-xl font-medium tracking-normal">Ookini</span></span>
+                </div>
+                
+                <!-- Desktop Navigation Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="text-coffee-700 hover:text-ochre-600 transition duration-150 text-sm font-medium">Inicio</a>
+                    <a href="#filosofia" class="text-coffee-700 hover:text-ochre-600 transition duration-150 text-sm font-medium">Filosofía</a>
+                    <a href="#quiz" class="text-coffee-700 hover:text-ochre-600 transition duration-150 text-sm font-medium">Encuentra tu Café</a>
+                    <a href="#menu" class="text-coffee-700 hover:text-ochre-600 transition duration-150 text-sm font-medium">Menú</a>
+                    <a href="#guia" class="text-coffee-700 hover:text-ochre-600 transition duration-150 text-sm font-medium">Guía V60</a>
+                    <a href="#visitanos" class="text-coffee-700 hover:text-ochre-600 transition duration-150 text-sm font-medium">Contacto</a>
+                </div>
+
+                <!-- Call to action desktop -->
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="#menu" class="bg-coffee-800 hover:bg-coffee-700 text-white px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition duration-300 shadow-md hover:shadow-lg">
+                        Ver Carta
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-coffee-900 hover:text-ochre-600 focus:outline-none transition p-2 rounded-lg" aria-label="Toggle Menu">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu panel -->
+        <div class="hidden md:hidden bg-coffee-100 border-b border-coffee-200" id="mobile-menu">
+            <div class="px-4 pt-2 pb-6 space-y-3">
+                <a href="#inicio" class="block px-3 py-2 rounded-md text-base font-medium text-coffee-800 hover:bg-coffee-200" onclick="toggleMenu()">Inicio</a>
+                <a href="#filosofia" class="block px-3 py-2 rounded-md text-base font-medium text-coffee-800 hover:bg-coffee-200" onclick="toggleMenu()">Filosofía</a>
+                <a href="#quiz" class="block px-3 py-2 rounded-md text-base font-medium text-coffee-800 hover:bg-coffee-200" onclick="toggleMenu()">Encuentra tu Café</a>
+                <a href="#menu" class="block px-3 py-2 rounded-md text-base font-medium text-coffee-800 hover:bg-coffee-200" onclick="toggleMenu()">Menú</a>
+                <a href="#guia" class="block px-3 py-2 rounded-md text-base font-medium text-coffee-800 hover:bg-coffee-200" onclick="toggleMenu()">Guía V60</a>
+                <a href="#visitanos" class="block px-3 py-2 rounded-md text-base font-medium text-coffee-800 hover:bg-coffee-200" onclick="toggleMenu()">Contacto</a>
+                <a href="#menu" class="block w-full text-center bg-coffee-800 text-white px-5 py-3 rounded-full text-sm font-semibold uppercase tracking-wider" onclick="toggleMenu()">
+                    Ver Carta
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header id="inicio" class="relative pt-24 min-h-screen flex items-center bg-cover bg-center overflow-hidden" style="background-image: linear-gradient(rgba(27, 18, 10, 0.75), rgba(27, 18, 10, 0.65)), url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=1600');">
+        <!-- Overlay decorativo japonés (Patrón de olas sutil en CSS / SVG) -->
+        <div class="absolute inset-0 opacity-10 mix-blend-overlay bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-8 text-center lg:text-left space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-ochre-500/20 backdrop-blur-md border border-ochre-500/30 text-ochre-200 px-4 py-1.5 rounded-full text-xs uppercase tracking-widest font-semibold">
+                        <i class="fa-solid fa-mug-hot"></i> Cafetería de Especialidad en Bogotá
+                    </div>
+                    <h1 class="font-serif text-5xl sm:text-7xl lg:text-8xl font-bold text-coffee-50 leading-none">
+                        Gratitud en <br class="hidden sm:inline">
+                        <span class="text-ochre-200 italic font-normal">cada taza.</span>
+                    </h1>
+                    <p class="text-coffee-100 text-lg sm:text-xl max-w-2xl font-light leading-relaxed">
+                        En Japón, <strong class="text-ochre-200 font-medium">Ookini (おおきに)</strong> significa "Gracias". Ofrecemos granos de especialidad de origen único con procesos artesanales, rindiendo homenaje a la hospitalidad y la precisión.
+                    </p>
+                    <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#menu" class="bg-ochre-500 hover:bg-ochre-600 text-coffee-950 px-8 py-4 rounded-full font-bold text-sm uppercase tracking-wider transition duration-300 shadow-lg text-center transform hover:-translate-y-1">
+                            Explorar Menú
+                        </a>
+                        <a href="#guia" class="bg-transparent hover:bg-white/10 text-white border border-white/40 hover:border-white px-8 py-4 rounded-full font-bold text-sm uppercase tracking-wider transition duration-300 text-center backdrop-blur-sm">
+                            Aprender Método V60
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Ilustración flotante/animada de taza -->
+                <div class="lg:col-span-4 flex justify-center relative">
+                    <div class="relative w-72 h-72 sm:w-80 sm:h-80 bg-coffee-950/40 rounded-full border border-coffee-200/20 p-8 backdrop-blur-sm flex items-center justify-center">
+                        <div class="absolute inset-0 rounded-full border border-ochre-500/20 animate-pulse"></div>
+                        <!-- Steam lines -->
+                        <div class="absolute -top-6 flex gap-3">
+                            <i class="fa-solid fa-wind text-white/20 text-3xl steam-effect"></i>
+                            <i class="fa-solid fa-wind text-white/25 text-2xl steam-effect-delayed"></i>
+                            <i class="fa-solid fa-wind text-white/20 text-3xl steam-effect" style="animation-delay: 0.8s"></i>
+                        </div>
+                        <div class="text-center z-10">
+                            <i class="fa-solid fa-circle-nodes text-ochre-500 text-4xl mb-3 block animate-spin" style="animation-duration: 15s;"></i>
+                            <p class="font-serif text-4xl font-bold text-white mb-1">Ookini</p>
+                            <span class="text-ochre-200 uppercase tracking-widest text-xs">Coffee Experience</span>
+                            <div class="w-12 h-0.5 bg-ochre-500 mx-auto my-3"></div>
+                            <p class="text-coffee-200 text-xs italic">"Omotenashi" en cada infusión</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Wave Divider Bottom -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 120" fill="none" class="w-full h-12 text-coffee-50 preserve-aspect-ratio" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,32L120,42.7C240,53,480,75,720,74.7C960,75,1200,53,1320,42.7L1440,32L1440,120L1320,120C1200,120,960,120,720,120C480,120,240,120,120,120L0,120Z" fill="currentColor"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- PHILOSOPHY & WABI-SABI CONCEPT -->
+    <section id="filosofia" class="py-24 bg-coffee-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                <div class="lg:col-span-5 order-2 lg:order-1">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=800" alt="Specialty Coffee Barista" class="w-full h-[450px] object-cover hover:scale-105 transition duration-700">
+                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-coffee-950 to-transparent text-white">
+                            <p class="font-serif text-lg italic">"La belleza reside en la simplicidad e imperfección."</p>
+                            <span class="text-xs uppercase tracking-widest text-ochre-200 mt-2 block">Filosofía Wabi-Sabi</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-7 order-1 lg:order-2 space-y-6">
+                    <span class="text-ochre-600 uppercase tracking-widest text-xs font-bold block">Nuestra Alma</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-bold text-coffee-900 leading-tight">La unión entre el café de especialidad y la gratitud japonesa</h2>
+                    <p class="text-coffee-700 leading-relaxed text-lg">
+                        En <strong>Ookini</strong> no solo servimos café; practicamos el arte del <em>Omotenashi</em> (hospitalidad desinteresada). Cada grano es cuidadosamente seleccionado de microlotes locales y mundiales para honrar el trabajo de los caficultores.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-ochre-100 flex items-center justify-center text-ochre-600 flex-shrink-0">
+                                <i class="fa-solid fa-seedling text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-coffee-900">Origen Trazable</h4>
+                                <p class="text-coffee-600 text-sm">Trabajamos directamente con fincas que promueven cultivos sostenibles.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-ochre-100 flex items-center justify-center text-ochre-600 flex-shrink-0">
+                                <i class="fa-solid fa-sliders text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-coffee-900">Precisión Científica</h4>
+                                <p class="text-coffee-600 text-sm">Controlamos TDS, temperatura y ratios para extraer la taza ideal.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-ochre-100 flex items-center justify-center text-ochre-600 flex-shrink-0">
+                                <i class="fa-solid fa-heart text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-coffee-900">Wabi-Sabi</h4>
+                                <p class="text-coffee-600 text-sm">Valoramos la belleza rústica y el carácter único de cada taza artesanal.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-ochre-100 flex items-center justify-center text-ochre-600 flex-shrink-0">
+                                <i class="fa-solid fa-face-smile text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-coffee-900">Ookini (Gratitud)</h4>
+                                <p class="text-coffee-600 text-sm">Nuestra misión es agradecer tu visita regalándote un momento sublime.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE COFFEE FINDER QUIZ -->
+    <section id="quiz" class="py-24 bg-coffee-100 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center space-y-4 mb-12">
+                <span class="text-ochre-600 uppercase tracking-widest text-xs font-bold block">Quiz Interactivo</span>
+                <h2 class="font-serif text-4xl sm:text-5xl font-bold text-coffee-900">Encuentra tu taza perfecta</h2>
+                <p class="text-coffee-600 max-w-lg mx-auto">Responde 3 preguntas sencillas y nuestro barista digital te recomendará el café ideal para ti.</p>
+            </div>
+            
+            <!-- Quiz Card -->
+            <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-coffee-200/50 relative overflow-hidden">
+                <!-- Progress bar -->
+                <div class="w-full bg-coffee-100 h-2 rounded-full mb-8 overflow-hidden">
+                    <div id="quiz-progress" class="bg-ochre-500 h-full w-1/3 transition-all duration-500"></div>
+                </div>
+
+                <!-- Step 1: Flavor Profile -->
+                <div id="step-1" class="quiz-step space-y-6">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-coffee-900 text-center">1. ¿Qué tipo de sabores disfrutas más por la mañana?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                        <button onclick="selectAnswer(1, 'acidic')" class="flex flex-col items-center justify-center p-6 border-2 border-coffee-200 hover:border-ochre-500 rounded-2xl bg-coffee-50 hover:bg-ochre-100/30 transition duration-300 group">
+                            <span class="text-3xl mb-2">🍋</span>
+                            <span class="font-bold text-coffee-900">Cítricos & Florales</span>
+                            <span class="text-xs text-coffee-500 text-center mt-1">Brillantes, ligeros, notas a té o jazmín.</span>
+                        </button>
+                        <button onclick="selectAnswer(1, 'sweet')" class="flex flex-col items-center justify-center p-6 border-2 border-coffee-200 hover:border-ochre-500 rounded-2xl bg-coffee-50 hover:bg-ochre-100/30 transition duration-300 group">
+                            <span class="text-3xl mb-2">🍫</span>
+                            <span class="font-bold text-coffee-900">Dulces & Chocolatados</span>
+                            <span class="text-xs text-coffee-500 text-center mt-1">Notas a cacao, caramelo, frutos secos.</span>
+                        </button>
+                        <button onclick="selectAnswer(1, 'creamy')" class="flex flex-col items-center justify-center p-6 border-2 border-coffee-200 hover:border-ochre-500 rounded-2xl bg-coffee-50 hover:bg-ochre-100/30 transition duration-300 group">
+                            <span class="text-3xl mb-2">🥛</span>
+                            <span class="font-bold text-coffee-900">Sedosos & Cremosos</span>
+                            <span class="text-xs text-coffee-500 text-center mt-1">Con buena textura, cuerpo denso y balanceado.</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Intensity/Texture -->
+                <div id="step-2" class="quiz-step hidden space-y-6">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-coffee-900 text-center">2. ¿Cómo prefieres la textura en boca de tu bebida?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                        <button onclick="selectAnswer(2, 'light')" class="flex flex-col items-center justify-center p-6 border-2 border-coffee-200 hover:border-ochre-500 rounded-2xl bg-coffee-50 hover:bg-ochre-100/30 transition duration-300">
+                            <span class="text-3xl mb-2">💧</span>
+                            <span class="font-bold text-coffee-900">Ligera e Infusionada</span>
+                            <span class="text-xs text-coffee-500 text-center mt-1">Limpio y sutil, similar a una infusión de té.</span>
+                        </button>
+                        <button onclick="selectAnswer(2, 'medium')" class="flex flex-col items-center justify-center p-6 border-2 border-coffee-200 hover:border-ochre-500 rounded-2xl bg-coffee-50 hover:bg-ochre-100/30 transition duration-300">
+                            <span class="text-3xl mb-2">☕</span>
+                            <span class="font-bold text-coffee-900">Balanceada y Redonda</span>
+                            <span class="text-xs text-coffee-500 text-center mt-1">Con carácter pero fácil de tomar.</span>
+                        </button>
+                        <button onclick="selectAnswer(2, 'heavy')" class="flex flex-col items-center justify-center p-6 border-2 border-coffee-200 hover:border-ochre-500 rounded-2xl bg-coffee-50 hover:bg-ochre-100/30 transition duration-300">
+                            <span class="text-3xl mb-2">🥄</span>
+                            <span class="font-bold text-coffee-900">Intensa y con Cuerpo</span>
+                            <span class="text-xs text-coffee-500 text-center mt-1">Espesa, concentrada y persistente.</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Temperature -->
+                <div id="step-3" class="quiz-step hidden space-y-6">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-coffee-900 text-center">3. ¿Qué temperatura prefieres hoy?</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        <button onclick="selectAnswer(3, 'hot')" class="flex flex-col items-center justify-center p-6 border-2 border-coffee-200 hover:border-ochre-500 rounded-2xl bg-coffee-50 hover:bg-ochre-100/30 transition duration-300">
+                            <span class="text-3xl mb-2">🔥</span>
+                            <span class="font-bold text-coffee-900">Caliente y reconfortante</span>
+                            <span class="text-xs text-coffee-500 text-center mt-1">Ideal para disfrutar despacio y apreciar notas calientes.</span>
+                        </button>
+                        <button onclick="selectAnswer(3, 'cold')" class="flex flex-col items-center justify-center p-6 border-2 border-coffee-200 hover:border-ochre-500 rounded-2xl bg-coffee-50 hover:bg-ochre-100/30 transition duration-300">
+                            <span class="text-3xl mb-2">🧊</span>
+                            <span class="font-bold text-coffee-900">Frío y refrescante</span>
+                            <span class="text-xs text-coffee-500 text-center mt-1">Perfecto para reactivar energías con hielo.</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Results Showcase -->
+                <div id="quiz-result" class="quiz-step hidden space-y-6 text-center">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-ochre-100 rounded-full text-ochre-600 mb-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-3xl"></i>
+                    </div>
+                    <h3 class="font-serif text-3xl font-bold text-coffee-900">¡Tu café ideal es el <span id="recommended-name" class="text-ochre-500">...</span>!</h3>
+                    
+                    <div class="max-w-md mx-auto bg-coffee-50 p-6 rounded-2xl border border-coffee-200 text-left space-y-4">
+                        <p id="recommended-desc" class="text-coffee-700 text-sm">Cargando tu recomendación personalizada...</p>
+                        <div class="flex items-center justify-between text-xs text-coffee-500 border-t border-coffee-200 pt-3">
+                            <span><strong>Método sugerido:</strong> <span id="recommended-method">V60</span></span>
+                            <span><strong>Notas claves:</strong> <span id="recommended-notes">Frutales</span></span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="resetQuiz()" class="bg-coffee-200 hover:bg-coffee-300 text-coffee-800 px-6 py-3 rounded-full text-sm font-semibold transition">
+                            Volver a Empezar
+                        </button>
+                        <a href="#menu" class="bg-ochre-500 hover:bg-ochre-600 text-coffee-950 px-6 py-3 rounded-full text-sm font-semibold transition shadow-md">
+                            Verlo en el Menú
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE BREWING GUIDE (V60 TIMER) -->
+    <section id="guia" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-ochre-600 uppercase tracking-widest text-xs font-bold block">Laboratorio de Filtrados</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-bold text-coffee-900">Método de Extracción V60</h2>
+                    <p class="text-coffee-700">
+                        El método V60 resalta las notas más sutiles, ácidas y florales del grano gracias a su cono de 60° y sus ranuras espirales. Usa nuestro temporizador interactivo diseñado por baristas profesionales para preparar tu taza perfecta en casa.
+                    </p>
+                    
+                    <div class="space-y-4 bg-coffee-50 p-6 rounded-2xl border border-coffee-200">
+                        <h4 class="font-bold text-coffee-900 flex items-center gap-2">
+                            <i class="fa-solid fa-scale-balanced text-ochre-500"></i> Parámetros Recomendados:
+                        </h4>
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div class="p-3 bg-white rounded-xl border border-coffee-200/50">
+                                <span class="text-xs text-coffee-500 block uppercase">Café de Especialidad</span>
+                                <strong class="text-lg text-coffee-900">15g</strong>
+                            </div>
+                            <div class="p-3 bg-white rounded-xl border border-coffee-200/50">
+                                <span class="text-xs text-coffee-500 block uppercase">Agua Purificada</span>
+                                <strong class="text-lg text-coffee-900">250g (92°C)</strong>
+                            </div>
+                            <div class="p-3 bg-white rounded-xl border border-coffee-200/50">
+                                <span class="text-xs text-coffee-500 block uppercase">Molienda</span>
+                                <strong class="text-lg text-coffee-900">Media/Fina</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive V60 Timer Widget -->
+                <div class="lg:col-span-6">
+                    <div class="bg-coffee-950 text-white rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+                        <div class="absolute inset-0 opacity-5 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:12px_12px]"></div>
+                        
+                        <!-- Header -->
+                        <div class="relative flex justify-between items-center border-b border-white/10 pb-4 mb-6">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-ochre-200">Asistente de Brew en Vivo</span>
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 bg-red-500 rounded-full animate-ping"></span>
+                                <span class="text-xs text-white/60">Interactivo</span>
+                            </div>
+                        </div>
+
+                        <!-- Main Screen -->
+                        <div class="relative text-center space-y-6 z-10 py-4">
+                            <!-- Circular Progress Timer -->
+                            <div class="relative w-40 h-40 mx-auto flex items-center justify-center rounded-full border-4 border-white/10">
+                                <div id="timer-progress-circle" class="absolute inset-[-4px] rounded-full border-4 border-transparent border-t-ochre-500 transition-all duration-1000 rotate-0"></div>
+                                <div>
+                                    <div id="v60-timer-display" class="text-4xl font-mono font-bold">00:00</div>
+                                    <div id="v60-current-pour" class="text-xs text-ochre-200 mt-1 uppercase font-semibold">Esperando...</div>
+                                </div>
+                            </div>
+
+                            <!-- Current Step Card -->
+                            <div class="bg-white/5 rounded-2xl p-4 border border-white/10 min-h-[100px] flex flex-col justify-center">
+                                <h4 id="v60-step-title" class="font-bold text-lg text-ochre-200">¿Listo para comenzar?</h4>
+                                <p id="v60-step-instruction" class="text-sm text-white/70 mt-1">Muele tus 15g de café y calienta el agua a 92°C.</p>
+                            </div>
+
+                            <!-- Scale Guide Visual -->
+                            <div class="grid grid-cols-2 gap-4 text-left bg-white/5 rounded-2xl p-4 border border-white/10">
+                                <div>
+                                    <span class="text-[10px] text-white/40 block uppercase">Agua vertida objetivo</span>
+                                    <div class="flex items-baseline gap-1">
+                                        <span id="v60-water-poured" class="text-2xl font-bold font-mono text-ochre-200">0</span>
+                                        <span class="text-xs text-white/60">ml / g</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] text-white/40 block uppercase">Fase Actual</span>
+                                    <div id="v60-phase-name" class="text-md font-bold text-white truncate mt-1">-</div>
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <div class="flex justify-center gap-4 pt-2">
+                                <button onclick="resetV60Timer()" id="v60-btn-reset" class="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-all">
+                                    Reiniciar
+                                </button>
+                                <button onclick="toggleV60Timer()" id="v60-btn-play" class="bg-ochre-500 hover:bg-ochre-400 text-coffee-950 px-8 py-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-all shadow-lg flex items-center gap-2">
+                                    <i id="v60-play-icon" class="fa-solid fa-play"></i> <span id="v60-play-text">Iniciar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE MENU CARD -->
+    <section id="menu" class="py-24 bg-coffee-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-4 mb-16">
+                <span class="text-ochre-600 uppercase tracking-widest text-xs font-bold block">La Carta</span>
+                <h2 class="font-serif text-4xl sm:text-5xl font-bold text-coffee-900">Menú Ookini</h2>
+                <p class="text-coffee-600 max-w-lg mx-auto">Selecciona tu categoría favorita para explorar la pureza de nuestros ingredientes.</p>
+                
+                <!-- Category Filter Buttons -->
+                <div class="flex flex-wrap justify-center gap-2 pt-4">
+                    <button onclick="filterMenu('todos')" class="menu-tab-btn active bg-coffee-800 text-white px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition duration-300">Todos</button>
+                    <button onclick="filterMenu('caliente')" class="menu-tab-btn bg-white hover:bg-coffee-200 text-coffee-800 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition duration-300">Calientes</button>
+                    <button onclick="filterMenu('frio')" class="menu-tab-btn bg-white hover:bg-coffee-200 text-coffee-800 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition duration-300">Fríos</button>
+                    <button onclick="filterMenu('filtrado')" class="menu-tab-btn bg-white hover:bg-coffee-200 text-coffee-800 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition duration-300">Filtrados</button>
+                    <button onclick="filterMenu('reposteria')" class="menu-tab-btn bg-white hover:bg-coffee-200 text-coffee-800 px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wider transition duration-300">Repostería</button>
+                </div>
+            </div>
+
+            <!-- Menu Grid -->
+            <div id="menu-items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Item 1: Espresso -->
+                <div class="menu-item border border-coffee-200/50 bg-white p-6 rounded-2xl shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" data-category="caliente">
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="space-y-2">
+                            <span class="bg-ochre-100 text-ochre-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Casa</span>
+                            <h3 class="font-serif text-xl font-bold text-coffee-900">Espresso Solo</h3>
+                            <p class="text-xs text-coffee-500 leading-relaxed">Extracción rápida con notas densas de cacao puro y acidez balanceada.</p>
+                        </div>
+                        <span class="text-ochre-600 font-mono font-bold text-lg">$6.500</span>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-coffee-100 flex justify-between items-center">
+                        <span class="text-[10px] text-coffee-400 font-medium uppercase"><i class="fa-solid fa-mug-hot"></i> Caliente / Fuerte</span>
+                        <button onclick="addToSimulatedOrder('Espresso Solo', 6500)" class="text-xs bg-coffee-800 hover:bg-ochre-500 hover:text-coffee-950 text-white px-3 py-1.5 rounded-lg transition duration-300 font-semibold uppercase">Agregar</button>
+                    </div>
+                </div>
+
+                <!-- Item 2: Flat White -->
+                <div class="menu-item border border-coffee-200/50 bg-white p-6 rounded-2xl shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" data-category="caliente">
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="space-y-2">
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Popular</span>
+                            <h3 class="font-serif text-xl font-bold text-coffee-900">Flat White Japonesa</h3>
+                            <p class="text-xs text-coffee-500 leading-relaxed">Doble espresso con una capa fina de leche microtexturizada y un toque sutil de vainilla de Madagascar.</p>
+                        </div>
+                        <span class="text-ochre-600 font-mono font-bold text-lg">$9.800</span>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-coffee-100 flex justify-between items-center">
+                        <span class="text-[10px] text-coffee-400 font-medium uppercase"><i class="fa-solid fa-mug-hot"></i> Caliente / Sedoso</span>
+                        <button onclick="addToSimulatedOrder('Flat White', 9800)" class="text-xs bg-coffee-800 hover:bg-ochre-500 hover:text-coffee-950 text-white px-3 py-1.5 rounded-lg transition duration-300 font-semibold uppercase">Agregar</button>
+                    </div>
+                </div>
+
+                <!-- Item 3: Origami Pour Over -->
+                <div class="menu-item border border-coffee-200/50 bg-white p-6 rounded-2xl shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" data-category="filtrado">
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="space-y-2">
+                            <span class="bg-ochre-100 text-ochre-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Artesanal</span>
+                            <h3 class="font-serif text-xl font-bold text-coffee-900">Origami Dripper</h3>
+                            <p class="text-xs text-coffee-500 leading-relaxed">Café de especialidad extraído en el elegante cono de cerámica japonesa. Perfil sumamente limpio.</p>
+                        </div>
+                        <span class="text-ochre-600 font-mono font-bold text-lg">$11.500</span>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-coffee-100 flex justify-between items-center">
+                        <span class="text-[10px] text-coffee-400 font-medium uppercase"><i class="fa-solid fa-filter"></i> Filtrado / Floral</span>
+                        <button onclick="addToSimulatedOrder('Origami Dripper', 11500)" class="text-xs bg-coffee-800 hover:bg-ochre-500 hover:text-coffee-950 text-white px-3 py-1.5 rounded-lg transition duration-300 font-semibold uppercase">Agregar</button>
+                    </div>
+                </div>
+
+                <!-- Item 4: Cold Brew Matcha -->
+                <div class="menu-item border border-coffee-200/50 bg-white p-6 rounded-2xl shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" data-category="frio">
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="space-y-2">
+                            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Fusión</span>
+                            <h3 class="font-serif text-xl font-bold text-coffee-900">Iced Matcha Espresso</h3>
+                            <p class="text-xs text-coffee-500 leading-relaxed">Matcha de grado ceremonial traído de Uji, Kyoto, servido con leche de almendra fresca y un shot de espresso.</p>
+                        </div>
+                        <span class="text-ochre-600 font-mono font-bold text-lg">$12.500</span>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-coffee-100 flex justify-between items-center">
+                        <span class="text-[10px] text-coffee-400 font-medium uppercase"><i class="fa-solid fa-snowflake"></i> Frío / Energizante</span>
+                        <button onclick="addToSimulatedOrder('Iced Matcha Espresso', 12500)" class="text-xs bg-coffee-800 hover:bg-ochre-500 hover:text-coffee-950 text-white px-3 py-1.5 rounded-lg transition duration-300 font-semibold uppercase">Agregar</button>
+                    </div>
+                </div>
+
+                <!-- Item 5: V60 Ice -->
+                <div class="menu-item border border-coffee-200/50 bg-white p-6 rounded-2xl shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" data-category="filtrado">
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="space-y-2">
+                            <span class="bg-ochre-100 text-ochre-600 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Especial</span>
+                            <h3 class="font-serif text-xl font-bold text-coffee-900">V60 sobre Hielo</h3>
+                            <p class="text-xs text-coffee-500 leading-relaxed">Extracción en caliente directa sobre hielos purificados. Resalta notas frutales refrescantes.</p>
+                        </div>
+                        <span class="text-ochre-600 font-mono font-bold text-lg">$11.200</span>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-coffee-100 flex justify-between items-center">
+                        <span class="text-[10px] text-coffee-400 font-medium uppercase"><i class="fa-solid fa-snowflake"></i> Frío / Delicado</span>
+                        <button onclick="addToSimulatedOrder('V60 sobre Hielo', 11200)" class="text-xs bg-coffee-800 hover:bg-ochre-500 hover:text-coffee-950 text-white px-3 py-1.5 rounded-lg transition duration-300 font-semibold uppercase">Agregar</button>
+                    </div>
+                </div>
+
+                <!-- Item 6: Mochi Roll -->
+                <div class="menu-item border border-coffee-200/50 bg-white p-6 rounded-2xl shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl" data-category="reposteria">
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="space-y-2">
+                            <span class="bg-pink-100 text-pink-800 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Matcha Love</span>
+                            <h3 class="font-serif text-xl font-bold text-coffee-900">Mochi Roll de Fresa</h3>
+                            <p class="text-xs text-coffee-500 leading-relaxed">Roll dulce con cobertura de mochi elástico japonés, relleno de crema de fresas silvestres y té verde.</p>
+                        </div>
+                        <span class="text-ochre-600 font-mono font-bold text-lg">$8.900</span>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-coffee-100 flex justify-between items-center">
+                        <span class="text-[10px] text-coffee-400 font-medium uppercase"><i class="fa-solid fa-cookie"></i> Dulce / Exclusivo</span>
+                        <button onclick="addToSimulatedOrder('Mochi Roll de Fresa', 8900)" class="text-xs bg-coffee-800 hover:bg-ochre-500 hover:text-coffee-950 text-white px-3 py-1.5 rounded-lg transition duration-300 font-semibold uppercase">Agregar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulated Cart Drawer Widget -->
+            <div id="cart-widget" class="fixed bottom-6 right-6 z-40 bg-coffee-900 text-white shadow-2xl rounded-2xl p-4 w-80 border border-white/10 hidden transform scale-95 transition-all duration-300">
+                <div class="flex justify-between items-center border-b border-white/10 pb-2 mb-3">
+                    <h4 class="font-bold text-sm flex items-center gap-2"><i class="fa-solid fa-basket-shopping text-ochre-500"></i> Tu Orden</h4>
+                    <button onclick="toggleCartWidget()" class="text-white/60 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div id="cart-items-list" class="space-y-2 max-h-40 overflow-y-auto pr-1 text-xs">
+                    <!-- Dynamic cart list items -->
+                </div>
+                <div class="border-t border-white/10 pt-3 mt-3 flex justify-between items-center text-sm">
+                    <span>Total Estimado:</span>
+                    <strong id="cart-total-value" class="text-ochre-500 font-mono">$0</strong>
+                </div>
+                <button onclick="showCheckoutNotification()" class="w-full bg-ochre-500 hover:bg-ochre-400 text-coffee-950 font-bold py-2 rounded-xl text-xs uppercase mt-4 transition tracking-wider">
+                    Simular Pedido en Barra
+                </button>
+            </div>
+
+            <!-- Cart Floating Action Button -->
+            <button onclick="toggleCartWidget()" id="floating-cart-btn" class="fixed bottom-6 right-6 z-40 bg-ochre-500 hover:bg-ochre-600 text-coffee-950 p-4 rounded-full shadow-2xl transition hover:scale-110 flex items-center justify-center border-2 border-white">
+                <i class="fa-solid fa-mug-saucer text-xl"></i>
+                <span id="cart-counter" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+            </button>
+
+        </div>
+    </section>
+
+    <!-- INTERACTIVE OOKINI GUESTBOOK -->
+    <section id="guestbook" class="py-24 bg-coffee-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center space-y-4 mb-12">
+                <span class="text-ochre-600 uppercase tracking-widest text-xs font-bold block">Gracias por visitarnos</span>
+                <h2 class="font-serif text-4xl sm:text-5xl font-bold text-coffee-900">Libro de Visitas Ookini</h2>
+                <p class="text-coffee-600 max-w-lg mx-auto">La gratitud fluye en dos direcciones. Déjanos una firma o un comentario sutil de tu experiencia en nuestra cafetería.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                <!-- Message submission form -->
+                <div class="md:col-span-5 bg-white p-6 rounded-3xl border border-coffee-200/50 shadow-lg space-y-4">
+                    <h3 class="font-serif text-xl font-bold text-coffee-900">Firmar Muro</h3>
+                    <form id="guestbook-form" onsubmit="handleGuestbookSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-coffee-500 mb-1" for="gb-name">Nombre / Seudónimo</label>
+                            <input type="text" id="gb-name" required class="w-full px-4 py-2 border border-coffee-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-ochre-500 text-sm bg-coffee-50" placeholder="Ej: Kenji">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-coffee-500 mb-1" for="gb-drink">Bebida Favorita</label>
+                            <input type="text" id="gb-drink" class="w-full px-4 py-2 border border-coffee-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-ochre-500 text-sm bg-coffee-50" placeholder="Ej: Flat White o V60">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-coffee-500 mb-1" for="gb-message">Mensaje de Gratitud</label>
+                            <textarea id="gb-message" required rows="3" class="w-full px-4 py-2 border border-coffee-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-ochre-500 text-sm bg-coffee-50" placeholder="¿Qué te pareció Ookini?"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-coffee-800 hover:bg-coffee-900 text-white py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition">
+                            Enviar Mensaje (Ookini!)
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Guestbook Wall board -->
+                <div class="md:col-span-7 bg-amber-50/50 p-6 rounded-3xl border border-coffee-200/40 shadow-inner h-[380px] overflow-y-auto space-y-4 relative" id="guestbook-wall">
+                    <!-- Default initial messages -->
+                    <div class="bg-white p-4 rounded-2xl border border-coffee-100 shadow-sm space-y-2">
+                        <div class="flex justify-between items-center">
+                            <strong class="text-sm text-coffee-900">Carlos R.</strong>
+                            <span class="text-[10px] text-ochre-600 bg-ochre-100 px-2 py-0.5 rounded-full"><i class="fa-solid fa-coffee"></i> Origami V60</span>
+                        </div>
+                        <p class="text-xs text-coffee-600 leading-relaxed italic">"El sabor del lote de Huila en V60 es sublime. Los baristas te explican la trazabilidad al detalle. ¡Ookini!"</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-2xl border border-coffee-100 shadow-sm space-y-2">
+                        <div class="flex justify-between items-center">
+                            <strong class="text-sm text-coffee-900">Yuki Tanaka</strong>
+                            <span class="text-[10px] text-ochre-600 bg-ochre-100 px-2 py-0.5 rounded-full"><i class="fa-solid fa-coffee"></i> Iced Matcha</span>
+                        </div>
+                        <p class="text-xs text-coffee-600 leading-relaxed italic">"Encontré un pedazo de mi hogar aquí en Bogotá. El Matcha frío es auténtico y balanceado. Volveré mil veces."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION, CONTACT & HOURS -->
+    <section id="visitanos" class="py-24 bg-coffee-900 text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                
+                <!-- Contact info -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-ochre-400 uppercase tracking-widest text-xs font-bold block">Visítanos</span>
+                    <h2 class="font-serif text-4xl sm:text-5xl font-bold text-white">Un santuario para los amantes del café</h2>
+                    <p class="text-coffee-200">
+                        Te esperamos para vivir una experiencia de café única basada en la hospitalidad y la precisión. Siente el aroma del grano recién molido en un espacio minimalista.
+                    </p>
+                    
+                    <div class="space-y-4 pt-4 border-t border-white/10">
+                        <div class="flex items-start gap-4">
+                            <div class="text-ochre-400 text-xl"><i class="fa-solid fa-location-dot"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Dirección</h4>
+                                <p class="text-coffee-300 text-xs">Calle 72 # 10-25, Quinta Camacho, Bogotá, Colombia</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="text-ochre-400 text-xl"><i class="fa-solid fa-clock"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Horarios de Apertura</h4>
+                                <p class="text-coffee-300 text-xs">Lunes a Sábado: 8:00 AM - 8:00 PM</p>
+                                <p class="text-coffee-300 text-xs">Domingos y Festivos: 10:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="text-ochre-400 text-xl"><i class="fa-solid fa-envelope"></i></div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Correo Electrónico</h4>
+                                <p class="text-coffee-300 text-xs">hola@ookinicafe.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form / Booking Simulation -->
+                <div class="lg:col-span-7 bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-sm space-y-6">
+                    <h3 class="font-serif text-2xl font-bold text-ochre-200">¿Tienes dudas o deseas reservar para catas?</h3>
+                    <form onsubmit="handleContactSubmit(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[10px] font-semibold uppercase text-white/60 mb-1">Nombre</label>
+                                <input type="text" required class="w-full px-4 py-2.5 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-ochre-500 text-sm text-white" placeholder="Ej: Sofía Gómez">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold uppercase text-white/60 mb-1">Celular / WhatsApp</label>
+                                <input type="tel" required class="w-full px-4 py-2.5 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-ochre-500 text-sm text-white" placeholder="Ej: 300 123 4567">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold uppercase text-white/60 mb-1">Asunto de interés</label>
+                            <select class="w-full px-4 py-2.5 bg-coffee-800 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-ochre-500 text-sm text-white">
+                                <option value="general">Consulta General</option>
+                                <option value="catas">Reserva para Catas de Especialidad</option>
+                                <option value="eventos">Eventos Corporativos</option>
+                                <option value="granos">Compra de Café en Grano (Mayoristas)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold uppercase text-white/60 mb-1">Tu Mensaje</label>
+                            <textarea rows="4" required class="w-full px-4 py-2.5 bg-white/10 border border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-ochre-500 text-sm text-white" placeholder="Cuéntanos más detalles..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-ochre-500 hover:bg-ochre-600 text-coffee-950 font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider transition">
+                            Enviar Solicitud
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-coffee-950 text-coffee-400 py-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+            <p class="font-serif text-2xl font-bold text-white">おおきに Ookini</p>
+            <p class="text-xs max-w-md mx-auto leading-relaxed">
+                Gracias por apoyar al comercio ético de café y celebrar con nosotros la belleza rústica y perfecta del grano artesanal.
+            </p>
+            <div class="flex justify-center gap-6 text-xl">
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-pinterest"></i></a>
+            </div>
+            <div class="w-16 h-px bg-white/10 mx-auto"></div>
+            <p class="text-[10px] text-coffee-500">&copy; 2026 Ookini Café de Especialidad. Todos los derechos reservados. Hecho con amor y gratitud.</p>
+        </div>
+    </footer>
+
+    <!-- ELEGANT NOTIFICATION MODAL (NO ALERT()) -->
+    <div id="modal-notif" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-coffee-950 border border-ochre-500 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 max-w-md w-11/12 md:w-auto opacity-0 translate-y-[-20px] pointer-events-none transition-all duration-300">
+        <div class="w-10 h-10 rounded-full bg-ochre-100 text-ochre-600 flex items-center justify-center text-lg flex-shrink-0">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div>
+            <h5 id="modal-notif-title" class="font-bold text-sm text-ochre-200">¡Acción Exitosa!</h5>
+            <p id="modal-notif-message" class="text-xs text-coffee-200 mt-0.5">La acción ha sido completada correctamente.</p>
+        </div>
+        <button onclick="hideNotification()" class="text-white/60 hover:text-white ml-auto"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Custom elegant notification system
+        function showNotification(title, message, isSuccess = true) {
+            const modal = document.getElementById('modal-notif');
+            const titleEl = document.getElementById('modal-notif-title');
+            const messageEl = document.getElementById('modal-notif-message');
+            
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            
+            modal.classList.remove('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+            modal.classList.add('opacity-100', 'translate-y-0');
+            
+            setTimeout(() => {
+                hideNotification();
+            }, 5000);
+        }
+
+        function hideNotification() {
+            const modal = document.getElementById('modal-notif');
+            modal.classList.add('opacity-0', 'translate-y-[-20px]', 'pointer-events-none');
+            modal.classList.remove('opacity-100', 'translate-y-0');
+        }
+
+        // MOBILE NAV MENU TOGGLE
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function toggleMenu() {
+            mobileMenu.classList.add('hidden');
+        }
+
+        // SCROLL NAVBAR STYLING EFFECT
+        const mainNav = document.getElementById('main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                mainNav.classList.add('shadow-lg', 'bg-coffee-50/95');
+                mainNav.classList.remove('bg-coffee-50/80');
+            } else {
+                mainNav.classList.remove('shadow-lg', 'bg-coffee-50/95');
+                mainNav.classList.add('bg-coffee-50/80');
+            }
+        });
+
+        // ==========================================
+        // INTERACTIVE COFFEE FINDER (QUIZ) LOGIC
+        // ==========================================
+        const quizAnswers = {
+            1: null,
+            2: null,
+            3: null
+        };
+
+        const coffeeRecommendations = {
+            'acidic-light-hot': {
+                name: 'Geisha de Origen Único en V60',
+                desc: 'Un perfil de tostión clara que resalta intensamente las notas florales a jazmín y té de limón de este varietal exclusivo.',
+                method: 'Filtrado V60',
+                notes: 'Jazmín, Bergamota, Limoncillo'
+            },
+            'acidic-light-cold': {
+                name: 'V60 en Hielo (Variedad Bourbon Rosado)',
+                desc: 'Una delicia fría que abre una frescura frutal de frutos rojos y mandarinas, extraído de manera rápida sobre cubos de hielo.',
+                method: 'V60 en Hielo',
+                notes: 'Mandarina, Arándanos, Limón'
+            },
+            'acidic-medium-hot': {
+                name: 'Origami Dripper - Castillo Honey',
+                desc: 'Un café procesado con método Honey que brinda notas a panela junto con un perfil vibrante de piña y durazno.',
+                method: 'Origami Dripper',
+                notes: 'Panela, Durazno, Piña'
+            },
+            'sweet-medium-hot': {
+                name: 'Flat White de la Casa',
+                desc: 'La fusión ideal entre un espresso doble de balance perfecto con notas a cacao y caramelo caramelizado, suavizado por leche cremosa.',
+                method: 'Espresso Máquina',
+                notes: 'Cacao, Dulce de Leche, Almendras'
+            },
+            'sweet-heavy-hot': {
+                name: 'Cappuccino Latte con Sirope de Caramelo Salado',
+                desc: 'Cuerpo denso y robusto de espresso clásico con sirope artesanal de caramelo y cristales de sal marina.',
+                method: 'Espresso Máquina',
+                notes: 'Caramelo Salado, Vainilla, Chocolate con Leche'
+            },
+            'creamy-heavy-hot': {
+                name: 'Latte con Leche de Avena y Macadamia',
+                desc: 'Textura espesa y aterciopelada perfecta para las mañanas frías, balanceando el amargor suave del café con nueces tostadas.',
+                method: 'Espresso Máquina',
+                notes: 'Nuez de Macadamia, Avena, Chocolate'
+            },
+            'creamy-heavy-cold': {
+                name: 'Iced Matcha Espresso Latte',
+                desc: 'Fusión fría con la cremosidad vegetal del matcha y el carácter robusto de un shot de espresso madurado.',
+                method: 'Espresso & Batido Matcha',
+                notes: 'Té Matcha, Vainilla, Melaza'
+            },
+            // Fallback default
+            'default': {
+                name: 'Café Filtrado Especial de la Finca Ookini',
+                desc: 'Nuestro balanceado café de origen exclusivo que gusta a todos los paladares por sus notas a panela y frutos secos.',
+                method: 'V60 / Origami',
+                notes: 'Chocolate, Naranja Dulce, Almendra'
+            }
+        };
+
+        function selectAnswer(step, answer) {
+            quizAnswers[step] = answer;
+            
+            // UI Progress transition
+            const progressBar = document.getElementById('quiz-progress');
+            progressBar.style.width = `${(step / 3) * 100}%`;
+
+            // Hide current step, show next
+            document.getElementById(`step-${step}`).classList.add('hidden');
+            
+            if (step < 3) {
+                document.getElementById(`step-${step + 1}`).classList.remove('hidden');
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-result').classList.remove('hidden');
+            const key = `${quizAnswers[1]}-${quizAnswers[2]}-${quizAnswers[3]}`;
+            const recommendation = coffeeRecommendations[key] || coffeeRecommendations['default'];
+
+            document.getElementById('recommended-name').textContent = recommendation.name;
+            document.getElementById('recommended-desc').textContent = recommendation.desc;
+            document.getElementById('recommended-method').textContent = recommendation.method;
+            document.getElementById('recommended-notes').textContent = recommendation.notes;
+        }
+
+        function resetQuiz() {
+            quizAnswers[1] = null;
+            quizAnswers[2] = null;
+            quizAnswers[3] = null;
+
+            document.getElementById('quiz-progress').style.width = '33.3%';
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('step-1').classList.remove('hidden');
+        }
+
+        // ==========================================
+        // V60 TIMED BREWING GUIDE
+        // ==========================================
+        let timerInterval = null;
+        let isTimerRunning = false;
+        let v60TimeSeconds = 0;
+        let v60CurrentStepIndex = 0;
+
+        const v60Steps = [
+            {
+                timeStart: 0,
+                timeEnd: 10,
+                title: "Precalentar & Lavar filtro",
+                instruction: "Vierte un poco de agua caliente sobre el filtro de papel y deséchala para remover sabores a celulosa.",
+                waterTarget: 0,
+                phase: "Preparativos"
+            },
+            {
+                timeStart: 10,
+                timeEnd: 45,
+                title: "Preinfusión (Bloom)",
+                instruction: "Vierte 45g de agua sobre el café y espera. Verás burbujas salir, liberando el CO2 del tostado reciente.",
+                waterTarget: 45,
+                phase: "Preinfusión"
+            },
+            {
+                timeStart: 45,
+                timeEnd: 105,
+                title: "Primer Vertido Circular",
+                instruction: "Vierte agua haciendo espirales del centro hacia afuera lentamente hasta alcanzar los 150 gramos.",
+                waterTarget: 150,
+                phase: "Extracción Ácida/Dulce"
+            },
+            {
+                timeStart: 105,
+                timeEnd: 165,
+                title: "Segundo Vertido Continuo",
+                instruction: "Vierte el agua restante con un hilo constante y suave directamente en el centro hasta llegar a los 250 gramos.",
+                waterTarget: 250,
+                phase: "Extracción Amargor Balanceado"
+            },
+            {
+                timeStart: 165,
+                timeEnd: 210,
+                title: "Goteo Final y Servir",
+                instruction: "Deja que drene el agua restante. Dale una pequeña vuelta circular al cono. ¡Retira el filtro y disfruta!",
+                waterTarget: 250,
+                phase: "Filtración Final"
+            }
+        ];
+
+        function toggleV60Timer() {
+            if (isTimerRunning) {
+                pauseV60Timer();
+            } else {
+                startV60Timer();
+            }
+        }
+
+        function startV60Timer() {
+            isTimerRunning = true;
+            document.getElementById('v60-play-text').textContent = 'Pausar';
+            document.getElementById('v60-play-icon').className = 'fa-solid fa-pause';
+            
+            timerInterval = setInterval(() => {
+                v60TimeSeconds++;
+                updateTimerDisplay();
+                updateV60StepLogic();
+            }, 1000);
+        }
+
+        function pauseV60Timer() {
+            isTimerRunning = false;
+            document.getElementById('v60-play-text').textContent = 'Continuar';
+            document.getElementById('v60-play-icon').className = 'fa-solid fa-play';
+            clearInterval(timerInterval);
+        }
+
+        function resetV60Timer() {
+            pauseV60Timer();
+            v60TimeSeconds = 0;
+            v60CurrentStepIndex = 0;
+            document.getElementById('v60-play-text').textContent = 'Iniciar';
+            document.getElementById('v60-play-icon').className = 'fa-solid fa-play';
+            document.getElementById('v60-timer-display').textContent = '00:00';
+            document.getElementById('timer-progress-circle').style.transform = 'rotate(0deg)';
+            
+            document.getElementById('v60-step-title').textContent = '¿Listo para comenzar?';
+            document.getElementById('v60-step-instruction').textContent = 'Muele tus 15g de café y calienta el agua a 92°C.';
+            document.getElementById('v60-water-poured').textContent = '0';
+            document.getElementById('v60-phase-name').textContent = '-';
+            document.getElementById('v60-current-pour').textContent = 'Esperando...';
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(v60TimeSeconds / 60);
+            const seconds = v60TimeSeconds % 60;
+            const displayMin = minutes < 10 ? '0' + minutes : minutes;
+            const displaySec = seconds < 10 ? '0' + seconds : seconds;
+            document.getElementById('v60-timer-display').textContent = `${displayMin}:${displaySec}`;
+            
+            // Rotate circular accent border slightly for aesthetic feed
+            const deg = (v60TimeSeconds * 6) % 360;
+            document.getElementById('timer-progress-circle').style.transform = `rotate(${deg}deg)`;
+        }
+
+        function updateV60StepLogic() {
+            // Find current step relative to time
+            const step = v60Steps.find(s => v60TimeSeconds >= s.timeStart && v60TimeSeconds < s.timeEnd);
+            
+            if (step) {
+                document.getElementById('v60-step-title').textContent = step.title;
+                document.getElementById('v60-step-instruction').textContent = step.instruction;
+                document.getElementById('v60-water-poured').textContent = step.waterTarget;
+                document.getElementById('v60-phase-name').textContent = step.phase;
+                document.getElementById('v60-current-pour').textContent = 'Paso en Progreso';
+            } else {
+                // If past the last step
+                pauseV60Timer();
+                document.getElementById('v60-step-title').textContent = '¡Café Listo! ☕';
+                document.getElementById('v60-step-instruction').textContent = 'Sirve en tu taza favorita, tómate un momento de gratitud... ¡Ookini!';
+                document.getElementById('v60-current-pour').textContent = 'Terminado';
+                showNotification('¡Extracción Finalizada!', 'Tu taza de café V60 está perfectamente balanceada y lista para disfrutar.');
+            }
+        }
+
+        // ==========================================
+        // MENU FILTERS & SIMULATED BASKET LOGIC
+        // ==========================================
+        const cart = [];
+
+        function filterMenu(category) {
+            // Update Tab active styling
+            const tabs = document.querySelectorAll('.menu-tab-btn');
+            tabs.forEach(tab => {
+                tab.classList.remove('bg-coffee-800', 'text-white', 'active');
+                tab.classList.add('bg-white', 'text-coffee-800');
+            });
+            
+            event.target.classList.add('bg-coffee-800', 'text-white', 'active');
+            event.target.classList.remove('bg-white', 'text-coffee-800');
+
+            // Hide/Show items
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(item => {
+                if (category === 'todos' || item.getAttribute('data-category') === category) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        function addToSimulatedOrder(name, price) {
+            // Add to simulated local order cart
+            const existing = cart.find(i => i.name === name);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            updateCartUI();
+            
+            // Visual bounce on floating cart
+            const floatBtn = document.getElementById('floating-cart-btn');
+            floatBtn.classList.add('scale-125');
+            setTimeout(() => floatBtn.classList.remove('scale-125'), 200);
+
+            showNotification('Item Agregado', `Se ha sumado ${name} a tu carrito de demostración.`);
+        }
+
+        function updateCartUI() {
+            const list = document.getElementById('cart-items-list');
+            const totalVal = document.getElementById('cart-total-value');
+            const counter = document.getElementById('cart-counter');
+            
+            list.innerHTML = '';
+            let total = 0;
+            let totalItems = 0;
+
+            if (cart.length === 0) {
+                list.innerHTML = '<p class="text-white/40 italic text-center py-4">Aún no tienes items seleccionados.</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price * item.quantity;
+                    totalItems += item.quantity;
+                    
+                    const el = document.createElement('div');
+                    el.className = 'flex justify-between items-center py-1 border-b border-white/5';
+                    el.innerHTML = `
+                        <span class="truncate pr-2">${item.name} <span class="text-ochre-400 font-bold">x${item.quantity}</span></span>
+                        <div class="flex items-center gap-2">
+                            <span>$${(item.price * item.quantity).toLocaleString()}</span>
+                            <button onclick="removeOneFromCart(${index})" class="text-red-400 hover:text-red-500 font-bold p-1"><i class="fa-solid fa-minus text-[10px]"></i></button>
+                        </div>
+                    `;
+                    list.appendChild(el);
+                });
+            }
+
+            totalVal.textContent = `$${total.toLocaleString()}`;
+            counter.textContent = totalItems;
+        }
+
+        function removeOneFromCart(index) {
+            if (cart[index].quantity > 1) {
+                cart[index].quantity--;
+            } else {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function toggleCartWidget() {
+            const widget = document.getElementById('cart-widget');
+            widget.classList.toggle('hidden');
+            widget.classList.toggle('scale-95');
+            widget.classList.toggle('scale-100');
+        }
+
+        function showCheckoutNotification() {
+            if (cart.length === 0) {
+                showNotification('Carrito Vacío', 'Por favor, agrega algún café o postre para simular el pedido.');
+                return;
+            }
+            showNotification('¡Pedido Simulado!', 'Orden recibida en barra. En un caso real, esto se enviaría directamente al sistema bar de Ookini.', true);
+            cart.length = 0; // Reset cart
+            updateCartUI();
+            toggleCartWidget();
+        }
+
+        // ==========================================
+        // GUESTBOOK FORM SUBMISSION
+        // ==========================================
+        function handleGuestbookSubmit(event) {
+            event.preventDefault();
+            const nameInput = document.getElementById('gb-name');
+            const drinkInput = document.getElementById('gb-drink');
+            const msgInput = document.getElementById('gb-message');
+
+            const wall = document.getElementById('guestbook-wall');
+            
+            // Build card element
+            const card = document.createElement('div');
+            card.className = 'bg-white p-4 rounded-2xl border border-coffee-100 shadow-sm space-y-2 transform translate-y-2 opacity-0 transition-all duration-500';
+            
+            const drinkText = drinkInput.value ? drinkInput.value : 'Amante del Café';
+
+            card.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <strong class="text-sm text-coffee-900">${escapeHtml(nameInput.value)}</strong>
+                    <span class="text-[10px] text-ochre-600 bg-ochre-100 px-2 py-0.5 rounded-full"><i class="fa-solid fa-coffee"></i> ${escapeHtml(drinkText)}</span>
+                </div>
+                <p class="text-xs text-coffee-600 leading-relaxed italic">"${escapeHtml(msgInput.value)}"</p>
+            `;
+
+            // Insert at the top of the wall scroll
+            wall.insertBefore(card, wall.firstChild);
+            
+            // Trigger animation
+            setTimeout(() => {
+                card.classList.remove('translate-y-2', 'opacity-0');
+            }, 50);
+
+            // Clean inputs
+            nameInput.value = '';
+            drinkInput.value = '';
+            msgInput.value = '';
+
+            showNotification('¡Ookini! (Gracias)', 'Tu comentario se ha agregado con éxito a nuestro muro de gratitud digital.');
+        }
+
+        // ==========================================
+        // CONTACT FORM SUBMISSION
+        // ==========================================
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            // Just simulate
+            showNotification('Mensaje Enviado', '¡Muchas gracias! Nuestro equipo te contactará lo antes posible para coordinar tu experiencia.', true);
+            event.target.reset();
+        }
+
+        // Helper to prevent HTML injection in guestbook
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>

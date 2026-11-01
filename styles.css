@@ -1,0 +1,80 @@
+body {
+    --dark-walnut: #582f0eff;
+    --saddle-brown: #7f4f24ff;
+    --toffee-brown: #936639ff;
+    --camel: #a68a64ff;
+    --khaki-beige: #b6ad90ff;
+    --dry-sage: #c2c5aaff;
+    --dry-sage-2: #a4ac86ff;
+    --dusty-olive: #656d4aff;
+    --ebony: #414833ff;
+    --charcoal-brown: #333d29ff;
+
+    background-color: var(--dry-sage);
+    font-family: "PT Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h1 {
+    color: var(--charcoal-brown);
+    font-size: 2.5rem;
+}
+
+header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--dark-walnut);
+}
+
+nav a {
+    color: var(--dark-walnut);
+}
+
+
+
+main {
+    padding: 3rem 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.metodo-titulo {
+    font-size: 1.1rem;
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+    color: var(--saddle-brown);
+}
+
+.precio {
+    font-weight: bold;
+    color: var(--saddle-brown);
+}
+
+
+
+
+#contacto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#contador-tazas {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--dusty-olive);
+}
+
+#boton-reservar {
+    display: block;
+    margin-top: 1rem;
+    padding: 0.5rem 1.25rem;
+    background-color: var(--dusty-olive);
+    color: #F2F0EA;
+    border: none;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    cursor: pointer;
+}
